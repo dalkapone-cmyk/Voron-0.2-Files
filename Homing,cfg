@@ -19,7 +19,7 @@ gcode:
     G91
     G1 X-10 F1200
     
-    #G4 P2000
+    # G4 P2000
     #M400 to finish all pending moves/process the buffer
     M400 
     G28 X
@@ -43,7 +43,7 @@ gcode:
     G91
     G1 Y-10 F1200
     
-    #G4 P2000
+    # G4 P2000
     #M400 to finish all pending moves/process the buffer
     M400 
     
@@ -63,7 +63,7 @@ axes: xyz
 gcode:
   {% set home_all = 'X' not in params and 'Y' not in params and 'Z' not in params %}
 
-  SET_KINEMATIC_POSITION Z=1
+  SET_KINEMATIC_POSITION Z=3
   G1 Z4 F1200
 
   {% if home_all or 'X' in params %}
@@ -75,12 +75,11 @@ gcode:
   {% endif %}
   
   {% if home_all or 'Z' in params %}
-    G90
-    G1 X60 Y60 F15000
-    
+       
     G28 Z
     G90
     G1 Z60 F1500
   {% endif %}
 
+  G1 X60 Y60
 
