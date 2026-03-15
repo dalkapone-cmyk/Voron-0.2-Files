@@ -1,13 +1,13 @@
 
 
 
-
 # Note you may need to add the following to your printer.cfg somewhere (without the comments of course) for the Kinematic position stuff below to work.
 #[force_move]
 #enable_force_move: True
-
+#status_homing
 [gcode_macro _HOME_X]
 gcode:
+    STATUS_homing
     # Home
     {% set RUN_CURRENT_X = printer.configfile.settings['tmc2209 stepper_x'].run_current|float %}
     {% set RUN_CURRENT_Y = printer.configfile.settings['tmc2209 stepper_y'].run_current|float %}
@@ -30,6 +30,8 @@ gcode:
     
     SET_TMC_CURRENT STEPPER=stepper_x CURRENT={RUN_CURRENT_X}
     SET_TMC_CURRENT STEPPER=stepper_y CURRENT={RUN_CURRENT_Y}
+
+    ##############################################################################################
 
 [gcode_macro _HOME_Y]
 gcode:
@@ -75,11 +77,22 @@ gcode:
   {% endif %}
   
   {% if home_all or 'Z' in params %}
+
+  ##################################################################################
        
     G28 Z
     G90
     G1 Z60 F1500
   {% endif %}
 
-  G1 X60 Y60
+  G1 X60 Y60                           
 
+ STATUS_READY
+
+
+
+
+
+
+
+  
